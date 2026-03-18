@@ -1,0 +1,81 @@
+/* Contenedor de la lista de sugerencias simple (justo debajo del input) */
+.lista-sugerencias-container {
+    position: absolute;
+    background-color: #ddd;
+    border: 1px solid #aaa;
+    padding: 5px;
+    width: 200px;
+    z-index: 10; 
+}
+
+/* Contenedor de las tarjetas detalladas */
+.resultados-container-horizontal {
+    padding: 5px;
+    margin-top: 80px; 
+    max-width: 100%; 
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: nowrap; 
+    gap: 15px;  
+    overflow-x: auto; 
+    overflow-y: hidden;
+    padding-bottom: 10px; 
+}
+
+/* Estilo para el mensaje de "no encontrado" */
+.mensaje-vacio {
+    width: 100%;
+    color: #666;
+    font-style: italic;
+    margin: 5px 0;
+}
+
+/* Contenedor de cada tarjeta de producto */
+.tarjeta-producto {
+     width: 220px;           
+    height: 320px;          
+    border: 1px solid #00a;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #eef;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título de la tarjeta (la palabra clave) */
+.tarjeta-titulo {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+    color: #0066cc;
+}
+
+/* Estilo para la imagen dentro de la tarjeta */
+.tarjeta-imagen {
+     width: 100%;            
+    height: 160px;          
+    object-fit: cover;      
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+/* Estilo para el texto de precio */
+.tarjeta-precio {
+    margin: 5px 0 0 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo para el texto simple de la lista de sugerencias */
+.lista-item-simple {
+    margin: 2px 0;
+    cursor: default;
+    
+}
+
+.tarjeta-producto:hover {
+    box-shadow: 0 0 10px rgba(0, 102, 204, 0.5);
+    background-color: #ddf;
+}

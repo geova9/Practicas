@@ -1,0 +1,9 @@
+.normal {
+    background-color: lightgray;
+    color: black;
+}
+
+.active {
+    background-color: red;
+    color: white;
+}

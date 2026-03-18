@@ -1,0 +1,133 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script>
+			function cargarProductos(event) {
+				event.currentTarget.remove();
+				
+				let div1 = document.getElementById("div1");
+				let tabla = crearTabla(3,3);
+				tabla.border = "1";
+				tabla.style.borderCollapse = "collapse";
+				tabla.style.display = "inline-block";
+				div1.appendChild(tabla);
+			}
+			
+			function crearTabla(filas, columnas) {
+				let tabla = document.createElement("table");
+				let n = 1;
+				for(let i = 0; i < filas; i++) {
+					let tr = document.createElement("tr");
+					for(let j = 0; j < columnas; j++) {
+						let td = document.createElement("td");
+						
+						td.textContent = "P0"+(n++);
+						td.addEventListener("click", () => cargarCodigo(td.textContent));
+						td.addEventListener("mouseover", () => td.style.backgroundColor = "lightblue");
+						td.addEventListener("mouseout", () => td.style.backgroundColor = "white");
+						td.style.padding = "5px";
+						tr.appendChild(td);
+					}
+					tabla.appendChild(tr);					
+				}
+				
+				return tabla;
+			}
+			
+			function cargarCodigo(codigo) {
+				let request = new XMLHttpRequest();
+				request.open("POST", "examenDavid.php", true);;
+				request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+				request.onreadystatechange = () => {
+					if(request.readyState === 4 && request.status === 200) {
+						let producto = JSON.parse(request.responseText);
+						cargarProducto(producto);
+					}
+				}
+				
+				request.send("codigo"+codigo);
+			}
+			
+			function cargarProducto(producto) {
+				let div2 = document.getElementById("div2");
+				div2.replaceChildren();
+				
+				if(producto.error) {
+					let error = document.createElement("p");
+					error.textContent = producto.error;
+					error.style.color = "red";
+					div2.appendChild(error);
+				} else {
+					let nombre = document.createElement("p");
+					nombre.textContent = "Nombre: " + producto.nombre;
+					div2.appendChild(nombre);
+					
+					let precio = document.createElement("p");
+					precio.textContent = "Precio: " + producto.precio+"€";
+					div2.appendChild(precio);
+					
+					let unidadesLabel = document.createElement("label");
+					unidadesLabel.setAttribute("for", "unidades");
+					unidadesLabel.textContent = "Intro nº unidades:";
+					div2.appendChild(unidadesLabel);
+					
+					let unidades = document.createElement("input");
+					unidades.setAttribute("type", "number");
+					unidades.id="unidades";
+					unidades.style.width = "50px";
+					unidades.value = 0;
+					div2.appendChild(unidades);
+					
+					div2.appendChild(document.createElement("br"));
+					
+					let p = document.createElement("span");
+					p.textContent = "Recoger en: ";
+					div2.appendChild(p);
+					
+					let i = 0;
+					producto.tiendas.forEach(tienda => {
+						let tiendaLabel = document.createElement("label");
+						tiendaLabel.setAttribute("for", "tienda"+i);
+						tiendaLabel.textContent = tienda;
+						div2.appendChild(tiendaLabel);
+						
+						let radio = document.createElement("input");
+						radio.setAttribute("type", "radio");
+						radio.name = "tienda";
+						radio.value = tienda;
+						radio.id = "tienda"+i;
+						div2.appendChild(radio);
+						
+						i++;
+					});
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<script>
+			let div1 = document.createElement("div");
+			div1.style.border = "1px solid blue";
+			div1.style.width = "300px";
+			div1.style.height = "400px";
+			div1.style.textAlign = "center";
+			div1.style.paddingTop = "150px";
+			div1.id = "div1";
+			document.body.appendChild(div1);
+			
+			let div2 = document.createElement("div");
+			div2.style.textAlign = "center";
+			div2.style.border = "1px solid red";
+			div2.style.width = "300px";
+			div2.style.height = "200px";
+			div2.id = "div2";
+			document.body.appendChild(div2);
+			
+			let botonCargar = document.createElement("input");
+			botonCargar.setAttribute("type", "button");
+			botonCargar.value = "Cargar Tabla de Poductos";
+			botonCargar.addEventListener("click", cargarProductos);
+			div1.appendChild(botonCargar);
+		</script>
+	</body>
+<html>
