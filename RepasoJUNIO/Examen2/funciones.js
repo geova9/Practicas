@@ -74,3 +74,17 @@ container.appendChild(boton);
 
 
 } )
+
+function cargarategorias(){
+    let xhr=XMLHttpRequest();
+    xhr.open('POST', 'categorias.php', true);
+   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+   xhr.onreadystatechange = function(){
+    if(xhr.readyState == 4 && xhr.status==200){
+        let categoria=JSON.parse(xhr.responseText);
+    }
+   }
+
+
+
+}
