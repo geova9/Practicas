@@ -1,6 +1,6 @@
 <?php
 
-$lista=[
+$lista = [
     [
         "codigo" => "PO_1",
         "nombre" => "Manga - Jujitsu Kaisen",
@@ -9,7 +9,6 @@ $lista=[
         "categoria" => ["Shonen", "Seinen"],
         "disponible" => true
     ],
- 
     [
         "codigo" => "PO_2",
         "nombre" => "Manga - Berserk Vol. 1",
@@ -50,34 +49,25 @@ $lista=[
         "categoria" => ["Seinen", "Histórico"],
         "disponible" => true
     ]
-
-
-
 ];
 
-$categoriaBuscada=$_POST['categoria'] ?? null;
 
- $resultado=null;
 
-foreach($lista as $producto){
+$categorias = [];
 
-    if($producto["categoria"] == $categoriaBuscada){
-        $resultado=$producto;
-        break;
+foreach ($lista as $producto) {
+    foreach ($producto["categoria"] as $cat) {
+/*¿Esta categoría ya la he guardado antes?”
+         Si NO está → la añades
+         Si YA está → la ignoras*/
+
+        if (!in_array($cat, $categorias)) {
+            //Metes la categoría en tu lista final.*/
+            $categorias[] = $cat;
+        }
     }
-    
 }
 
 header('Content-Type: application/json');
-
-if($resultado){
-    echo json_encode($resultado)
-}else{
-    echo json_encode(["error"=>"Producto no encontrado"]);
-}
- 
-
-
-
-
+echo json_encode($categorias);
 ?>
