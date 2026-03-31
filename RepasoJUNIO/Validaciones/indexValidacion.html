@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HTML Tutorial</title>
+  <script src='procesar1.js'></script>
+</head>
+
+<body>
+
+
+  <img src="logo.png" id="logoImg"
+       style="position:absolute; top:0px; left:0px; width:50px; height:50px; z-index:100;">
+
+  <form id="f1" style="position:relative; padding-top:50px">
+    Nombre:* <input type="text" id="nombre"><br>
+    Contraseña:* <input type="text" id="contrasenya"><br>
+    Salario: <input type="text" id="salario"><br>
+
+    Tipo de tarjeta*:
+    <select id="tipoTarjeta">
+      <option value="" selected></option>
+      <option value="Mastercard">Mastercard</option>
+      <option value="Visa">Visa</option>
+    </select>
+    <br>
+
+    Nº Tarjeta:* <input type="text" id="numTarjeta"><br>
+    <input type="submit" value="Enviar">
+  </form>
+</body>
+</html>

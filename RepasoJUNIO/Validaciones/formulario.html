@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Formulario Validación</title>
+<script>
+//regex
+let regexName=/^[A-Za-z ]+$/;//es espacio despues de la z literal es que se permite espacios.
+let regexNameSpanish=/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,20}$/;
+let regexDes=/^.{5,}$/;
+let edadSoloNumero=/^[0-9]+$/;
+let regexEdad1=/^[1-9][0-9]?$/;//digitos un solo digito o dos digitos
+let regexEdad2=/^(1[89][2-5][0-9]|6[0-5])$/;
+let regexTelefono=/^\+34[67][0-9]{8}$/;
+
+
+document.addEventListener('DOMContentLoaded', ()=>{
+let formulario=document.getElementById('formulario');
+
+let boton=document.querySelector('button[type="submit"]');
+boton.addEventListener('click', validar);
+
+
+let telefono=document.getElementById('telefono');
+telefono.addEventListener('keydown', bloquearTeclas);
+
+let botonVocales=document.getElementById('vocales');
+botonVocales.addEventListener('click', contarVocales);
+
+
+
+
+})
+
+
+function validar(event){
+
+
+let name=document.getElementById('nombre'); 
+let email=document.getElementById('email');  
+let telefono=document.getElementById('telefono');
+let edad=document.getElementById('edad');
+let description=document.getElementById('descripcion');
+
+
+    if(name.value == "" ||!regexNameSpanish.test(name.value)){
+        alert("El name es obligatorio y solo letras Mayus y Minus");
+        event.preventDefault();
+    }
+   /* if(!regexName.test(name.value)){
+        alert("Solo se permite Mayus y Minus");
+        event.preventDefault();
+    }*/
+
+    if(email.value == ""){
+        alert("El email es obligatorio");
+        event.preventDefault();
+    }
+    if(telefono.value == "" || !regexTelefono.test(telefono.value)){
+        alert("El teléfono es obligatorio y +34 ");
+        event.preventDefault();
+    }
+    if(edad.value == "" || !regexEdad1.test(edad.value)){
+        alert("El edad es obligatorio y solo numerooooooos");
+        event.preventDefault();
+    }
+    if(description.value == ""|| !regexDes.test(description.value)){
+        alert("El descripcion es obligatorio y minimo 5 caracteres");
+        event.preventDefault();
+    }
+
+}
+
+
+
+function bloquearTeclas(e){
+    let telefono=document.getElementById('telefono').value;
+   let digitos="0123456789+";
+   if(!digitos.includes(e.key) && e.key!="Backspace"){
+    alert("NOOOO");
+    e.preventDefault();
+   
+   }
+}
+
+function contarVocales(){
+    let vocales="aeiou";
+    let contador=0;
+    let description=document.getElementById('descripcion').value;
+    for(let i = 0; i< description.length; i++){
+        if(vocales.includes(description[i])){
+           contador++;
+        }
+    }
+   alert('El numero de vocales es ' +contador);
+
+}
+
+</script>
+</head>
+
+<body>
+
+<h2>Formulario</h2>
+
+<form id="formulario">
+
+<label>Nombre</label>
+<br>
+<input type="text" id="nombre">
+<br><br>
+
+<label>Email</label>
+<br>
+<input type="text" id="email">
+<br><br>
+
+<label>Teléfono</label>
+<br>
+<input type="text" id="telefono">
+<br><br>
+
+<label>Edad (solo números)</label>
+<br>
+<input type="text" id="edad">
+<br><br>
+
+<label>Descripción</label>
+<br>
+<textarea id="descripcion" rows="4" cols="40"></textarea>
+<button id="vocales">Contar Vocales</button>
+<br><br>
+
+<button type="submit">Enviar</button>
+
+</form>
+
+</body>
+</html>
