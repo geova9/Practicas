@@ -1,0 +1,112 @@
+================================================================================
+GUÍA COMPLETA DE EXPRESIONES REGULARES (REGEX) Y JAVASCRIPT
+================================================================================
+
+1. CONCEPTOS BÁSICOS
+--------------------------------------------------------------------------------
+[Letras y caracteres básicos]
+  "hola"  -> Busca exactamente "hola" en un texto.
+  "abc"   -> Coincide con "abc" en cualquier parte del texto.
+
+[Metacaracteres] (Tienen significados especiales)
+  .       -> Cualquier carácter (excepto salto de línea).
+  ^       -> Indica el inicio de una línea o cadena.
+  $       -> Indica el final de una línea o cadena.
+  \       -> Escape para caracteres especiales (ej. \. busca un punto literal).
+
+[Cuantificadores] (Indican cuántas veces debe aparecer un patrón)
+  * -> 0 o más veces. (Ej: "a*" -> "", "a", "aa"...)
+  +       -> 1 o más veces. (Ej: "a+" -> "a", "aa", pero no "")
+  ?       -> 0 o 1 vez. (Ej: "colou?r" -> "color", "colour")
+  {n}     -> Exactamente n repeticiones.
+  {n,}    -> Al menos n repeticiones.
+  {n,m}   -> Entre n y m repeticiones.
+
+[Clases de caracteres]
+  [abc]   -> Coincide con "a", "b" o "c".
+  [^abc]  -> Negación: Cualquier carácter EXCEPTO "a", "b" o "c".
+  [a-z]   -> Rango: Cualquier letra minúscula.
+  [A-Z]   -> Rango: Cualquier letra mayúscula.
+  [0-9]   -> Rango: Cualquier dígito.
+  
+  \d      -> Dígito (Equivalente a [0-9]).
+  \D      -> No dígito.
+  \w      -> Carácter alfanumérico (letras, números y guion bajo).
+  \W      -> No alfanumérico.
+  \s      -> Espacio en blanco (espacio, tab, salto línea).
+  \S      -> No espacio en blanco.
+
+[Grupos y Alternancias]
+  (abc)   -> Grupo de captura: Agrupa caracteres como unidad.
+  a|b     -> Alternancia: "a" o "b".
+  (?:abc) -> Grupo sin captura (agrupa pero no guarda el resultado).
+
+
+2. CONCEPTOS AVANZADOS (AMPLIACIÓN)
+--------------------------------------------------------------------------------
+[Banderas / Flags] (Se ponen al final de la expresión: /regex/g)
+  i       -> Insensitive: Ignora mayúsculas/minúsculas.
+  g       -> Global: Busca todas las coincidencias, no solo la primera.
+  m       -> Multiline: Hace que ^ y $ funcionen en cada línea.
+
+[Límites]
+  \b      -> Límite de palabra (Word Boundary). 
+             Ej: \bcasa\b encuentra "casa" pero no "casamiento".
+
+[Cuantificadores Perezosos (Lazy)]
+  *? o +? -> Toman lo mínimo posible en lugar de todo lo posible.
+             Ej: /<.+?>/ en "<div>hola</div>" selecciona solo "<div>".
+
+
+3. EJEMPLOS PRÁCTICOS "LISTOS PARA USAR"
+--------------------------------------------------------------------------------
+Correo electrónico (simple):
+  ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
+
+Fecha (DD/MM/AAAA):
+  ^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/\d{4}$
+
+Contraseña Segura:
+(Mínimo 8 chars, 1 mayúscula, 1 número, 1 símbolo)
+  ^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$
+
+Solo números enteros:
+  ^\d+$
+
+
+4. IMPLEMENTACIÓN EN CÓDIGO (JAVASCRIPT)
+--------------------------------------------------------------------------------
+
+A. VALIDAR SI CUMPLE UN PATRÓN (.test)
+Devuelve true o false. Ideal para ifs.
+
+  let regex = /^[A-Za-z]+$/;
+  if (regex.test("Hola")) {
+      console.log("Válido");
+  }
+
+B. EXTRAER INFORMACIÓN (.match)
+Devuelve un array con los resultados encontrados.
+
+  let texto = "Tengo 2 gatos y 5 perros";
+  let numeros = texto.match(/\d+/g); 
+  // Resultado: ["2", "5"]
+
+C. LIMPIAR O REEMPLAZAR TEXTO (.replace)
+Muy útil para formatear inputs.
+
+  let sucio = "  H0la  ";
+  let limpio = sucio.replace(/0/g, "o").trim();
+  // Resultado: "Hola"
+
+
+5. IMPLEMENTACIÓN EN HTML (SIN JAVASCRIPT)
+--------------------------------------------------------------------------------
+Usando el atributo 'pattern'. El navegador valida solo al enviar.
+
+  <form>
+    <label>Solo letras:</label>
+    <input type="text" pattern="[A-Za-zñÑ\s]+" title="Solo letras por favor">
+    <button type="submit">Enviar</button>
+  </form>
+

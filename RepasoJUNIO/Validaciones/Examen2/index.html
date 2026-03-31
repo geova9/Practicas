@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Examen: Validación de Formulario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 0.85em;
+            display: none;
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #mensajeExito {
+            color: green;
+            font-weight: bold;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+    <script>
+        //regex aparte
+        let regexname = /^[A-Za-zÁÉÍÓÚáéíóú\s]{3,}$/;
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let btnEnviar = document.querySelector('button[type="submit"]');
+            btnEnviar.addEventListener('click', validarForm);
+
+
+
+
+        })
+
+        function validarForm(e) {
+
+            //cogemos los distintos campos del form
+            let name = document.getElementById('nombre');
+            let email = document.getElementById('email');
+            let pass = document.getElementById('password');
+            let phone = document.getElementById('telefono');
+            let regexEmail=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+
+            if (name.value == "" || !regexname.test(name.value)) {
+                let error = document.getElementsByClassName('error-msg')[0];
+                error.style.display="block";
+                e.preventDefault();
+            }
+            if (email.value == "" || !regexEmail.test(email.value)) {
+                let errorEmail = document.getElementsByClassName('error-msg')[1];
+                errorEmailstyle.display="block";
+                e.preventDefault();
+            }
+
+
+        }
+
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <h2>Registro de Usuario</h2>
+    <form id="registroForm">
+
+        <div class="form-group">
+            <label for="nombre">Nombre Completo:</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez">
+            <span class="error-msg" id="errorNombre">El nombre debe tener al menos 3 caracteres y solo letras.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" placeholder="ejemplo@correo.com">
+            <span class="error-msg" id="errorEmail">Introduce un correo electrónico válido.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password">
+            <span class="error-msg" id="errorPassword">Mínimo 8 caracteres, una mayúscula y un número.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono (Solo números):</label>
+            <input type="text" id="telefono" name="telefono" maxlength="9" placeholder="Ej. 600123456">
+            <span class="error-msg" id="errorTelefono">Debe contener exactamente 9 dígitos.</span>
+        </div>
+
+        <button type="submit">Registrarse</button>
+    </form>
+
+    <div id="mensajeExito">¡Registro completado con éxito!</div>
+
+</body>
+
+</html>
