@@ -64,7 +64,11 @@
             btnEnviar.addEventListener('click', validarForm);
 
 
+            let phone = document.getElementById('telefono');
+            phone.addEventListener('keydown', bloquearTeclas);
 
+            let  btnConsonantes=document.getElementById('consonantes');
+            btnConsonantes.addEventListener('click', contarConsonates);
 
         })
 
@@ -75,23 +79,56 @@
             let email = document.getElementById('email');
             let pass = document.getElementById('password');
             let phone = document.getElementById('telefono');
-            let regexEmail=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            let regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            let regexPass = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+            let regexPhone = /^[67][0-9]{8}$/;
 
 
             if (name.value == "" || !regexname.test(name.value)) {
                 let error = document.getElementsByClassName('error-msg')[0];
-                error.style.display="block";
+                error.style.display = "block";
                 e.preventDefault();
             }
             if (email.value == "" || !regexEmail.test(email.value)) {
                 let errorEmail = document.getElementsByClassName('error-msg')[1];
-                errorEmailstyle.display="block";
+                errorEmail.style.display = "block";
+                e.preventDefault();
+            }
+            if (pass.value == "" || !regexPass.test(pass.value)) {
+                let errorPass = document.getElementsByClassName('error-msg')[2];
+                errorPass.style.display = "block";
+                e.preventDefault();
+            }
+            if (phone.value == "" || !regexPhone.test(phone.value)) {
+                let errorPhone = document.getElementsByClassName('error-msg')[3];
+                errorPhone.style.display = "block";
                 e.preventDefault();
             }
 
 
         }
+        function bloquearTeclas(e) {
+            let digitos = "0123456789";
 
+            if (!digitos.includes(e.key) && e.key != "Backspace") {
+                alert("NOOOO");
+                e.preventDefault();
+            }
+        }
+
+        function contarConsonates(){
+            let consonates="a";
+            let email = document.getElementById('email').value;
+            let contador=0;
+            for (let i = 0; i < email.length; i++) {
+                if(consonates.includes(email[i])){
+                    contador++;
+                }
+                
+            }
+            alert('El email tiene '+contador++);
+
+        }
 
 
 
@@ -115,6 +152,7 @@
             <label for="email">Correo Electrónico:</label>
             <input type="email" id="email" name="email" placeholder="ejemplo@correo.com">
             <span class="error-msg" id="errorEmail">Introduce un correo electrónico válido.</span>
+            <button id="consonantes" type="button">Consonates</button>
         </div>
 
         <div class="form-group">
