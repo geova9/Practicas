@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 400px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    perspective: 1000px;
+}
+
+.tile {
+    background-image: url("animacion.png");
+    background-size: 400px 400px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
