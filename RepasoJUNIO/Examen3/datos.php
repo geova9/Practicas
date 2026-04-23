@@ -54,8 +54,9 @@ $lista = [
 $codigo=$_POST['codigo'];
 $encontrado=null;
 foreach( $lista  as $producto){
-    if($producto['codigo'] == $codigo){
-        $encontrado == $producto;
+    if($producto["codigo"] == $codigo){
+        $encontrado = $producto;
+        break;
     }
 }
 header('Content-Type: application/json');
