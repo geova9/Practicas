@@ -74,16 +74,14 @@ foreach($lista as $producto){
 
 }
 
+
 header('Content-Type: application/json');
 
 if($resultado){
-    echo json_encode($resultado)
-}else{
+    echo json_encode($resultado);
+
+ } else{
     echo json_encode(["error"=>"Producto no encontrado"]);
 }
  
-
-
-
-
 ?>
