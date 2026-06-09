@@ -32,7 +32,7 @@ $productoBuscado=$_POST["codigo"];
 $encontrado=null;
 
 foreach($productos as $producto){
-    if($producto["codigo"] == $productoBuscado){
+    if($producto["codigo"] === $productoBuscado){
         $encontrado = $producto;
         break;
     }

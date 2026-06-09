@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<script>
+			const regexPass = /^[a-z][a-zA-Z\d_\s]{3,5}\d{2}$/;
+			const regexVisa = /^4\d{3}-\d{4}-\d{4}-\d{4}$/;
+			const regexMastercard = /^5[1-5]\d{2}-\d{4}-\d{4}-\d{4}$/;
+			const numeros = "1234567890";
+		
+			document.addEventListener("DOMContentLoaded", () => {
+				let nombre = document.getElementById("nombre");
+				nombre.addEventListener("focus", e => cambiarFondo(e, "blue"));
+				nombre.addEventListener("blur", e => cambiarFondo(e, "white"));
+				
+				let enviar = document.querySelector("input[type=submit]");
+				enviar.addEventListener("click", validar);
+				
+				document.getElementById("salario").addEventListener("keypress", soloNumeros);
+				document.getElementById("logoImg").addEventListener("mouseover", disminuir);
+			});
+			
+			document.addEventListener("dblclick", moverImagen)
+			
+			function soloNumeros(event) {
+				if(event.key !== "Backspace" && !numeros.includes(event.key))
+					event.preventDefault();
+			}
+			
+			function cambiarFondo(event, color) {
+				event.currentTarget.style.backgroundColor = color;
+			}
+			
+			function validar(event) {
+				let nombre = document.getElementById("nombre").value;
+				let pass = document.getElementById("contrasenya").value;
+				let tipoTarjeta = document.getElementById("tipoTarjeta").value;
+				let numTarjeta = document.getElementById("numTarjeta").value;
+				
+				if(nombre.trim().length === 0) {
+					alert("Rellena nombre");
+					event.preventDefault();
+				}
+				
+				if(!regexPass.test(pass)) {
+					alert("Contraseña debe empezar por una letra minuscula, acabar con dos digitos, y tener una longitud total de 6-8 caracteres.\nSe permiten mayusculas, minusculas, dígitos, espacios y guión bajo.");
+					event.preventDefault();
+				}
+				
+				let regexNumTarjeta = null;
+				if(tipoTarjeta === "Visa") {
+					regexNumTarjeta = regexVisa;
+				} else if(tipoTarjeta === "Mastercard") {
+					regexNumTarjeta = regexMastercard;
+				} else {
+					alert("Elige tipo de tarjeta");
+					event.preventDefault();
+				}
+				
+				if(numTarjeta.trim().length === 0) {
+					alert("Rellena numero de tarjeta");
+				}
+				else if(regexNumTarjeta && !regexNumTarjeta.test(numTarjeta)) {
+					alert("Numero de tarjeta invalido");
+					event.preventDefault();
+				}
+			}
+			
+			function moverImagen(event) {
+				let imagen = document.getElementById("logoImg");
+				imagen.style.top = event.clientY+"px";
+				imagen.style.left = event.clientX+"px";
+			}
+			
+			function disminuir(event) {
+				let width = parseInt(event.currentTarget.style.width.replace("px", ""));
+				let height = parseInt(event.currentTarget.style.height.replace("px", ""));
+				
+				if(height <= 10 || width <= 10)
+					return;
+				
+				event.currentTarget.style.width = (width-5)+"px";
+				event.currentTarget.style.height = (height-5)+"px";
+			}
+		</script>
+	</head>
+	<body>
+		<img src="logo.png" id="logoImg" style="position:absolute;top:0px;left:0px;width:50px;height:50px;z-index:100;">
+		<form id="f1" style="position:relative;padding-top:50px;">
+			Nombre*:<input type="text" id="nombre"><br>
+			Contraseña*:<input type="text" id="contrasenya"><br>
+			Salario:<input type="text" id="salario"><br>
+			Tipo de tarjeta*:
+			<select size="1" id="tipoTarjeta">
+				<option value=" " selected></option>
+				<option value="Mastercard">Mastercard</option>
+				<option value="Visa">Visa</option>
+			</select>
+			<br>
+			Nº Tarjeta*:<input type="text" id="numTarjeta"><br>
+			<input type="submit" value="Enviar">
+	</body>
+</html>
