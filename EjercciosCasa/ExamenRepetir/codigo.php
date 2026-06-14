@@ -9,7 +9,7 @@ $productos = [
 $codigoBuscado=$GET['codigo'];
 $codigoEncontrado=null;
 
-$producto.forEach($productos as $producto){
+foreach($productos as $producto){
 	if($producto['codigo'] === $codigoBuscado){
 		$codigoEncontrado = $codigoBuscado;
 		break;
