@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Registro Academia</title>
+<style>
+.error{
+    color:red;
+    font-size:14px;
+}
+
+.correcto{
+    color:green;
+}
+</style>
+<script>
+
+document.addEventListener('DOMContentLoaded', ()=>{
+	
+let formulario=document.getElementById('formulario');
+ formulario.addEventListener('submit', validar);
+ 
+ let apellido=document.getElementById('apellido');
+ 
+ apellido.addEventListener('keydown', ()=>{
+	 soloVocales(); 
+ });
+ 
+
+	
+	
+})
+
+function validar(event){
+	
+	let nombre=document.getElementById('nombre');
+	let regexNombre=/^[A-Za-zÁÉÍÓÚáéíóú ]{3,40}$/;
+	let errorNombre=document.querySelectorAll('.error')[0];
+	if(nombre.value == "" || !regexNombre.test(nombre.value)){
+		errorNombre.textContent="No puede estar vacio y solo letras espacios";
+		event.preventDefault();
+	}else{
+		errorNombre.textContent="";
+	}
+	
+	//usuario
+	/*Debe comenzar por una letra.
+     Puede contener letras, números y guiones bajos.
+     Debe terminar obligatoriamente con dos números.
+     Longitud total entre 5 y 12 caracteres.*/
+	
+	let usuario=document.getElementById('usuario');
+	let regexUsu=/^(?=[a-zA-Z_0-9]{5,12}$)[A-Za-z][A-Za-z0-9_]*[0-9]{2}$/;
+	let regexUsuario=/^[A-Za-z][A-Za-z0-9_]{2,9}[0-9]{2}$/;
+	let errorUsuario=document.querySelectorAll('.error')[1];
+	
+	if(usuario.value == "" || !regexUsuario.test(usuario.value)){
+		errorUsuario.textContent="No puede estar vacio y minimo 5 o 12 caracteres";
+		event.preventDefault();
+	}
+	
+	//Email
+	let email=document.getElementById('email');
+	let regexEmail=/^[A-Za-z0-9._%+-]+@[A-Za-z0-9._%+-]+\.[a-z]{2,3}$/;
+	let errorEmail=document.querySelectorAll('.error')[2];
+	
+	if(email.value == "" || !regexEmail.test(email.value)){
+		errorEmail.textContent="No puede estar vacio y algo@algo.***";
+		event.preventDefault();
+	}else{
+		errorEmail.textContent="";
+	}
+	
+	//contraseña
+	
+	let pass=document.getElementById('pass');
+	
+    let regexPass = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/; //significa: que no sea alfanumerico ?=.*[^A-Za-z0-9] por descarte es caracter especial
+	let errorPass=document.querySelectorAll('.error')[3];
+	
+	if(pass.value == "" || !regexPass.test(pass.value)){
+		errorPass.textContent="Al menos una letra mayúscula, Al menos una letra minúscula, Al menos un número, Al menos un carácter especial";
+		event.preventDefault();
+	}else{
+		errorPass.textContent="";
+	}
+	
+	
+	//comprobar 
+	   let passRepetida=document.getElementById('pass2');
+       let errorPass2=document.querySelectorAll('.error')[4];
+
+      if(passRepetida.value.trim()===""){
+      errorPass2.textContent="Debes repetir la contraseña";
+      event.preventDefault();
+	  
+	  
+      } else if(pass.value !== passRepetida.value){
+        errorPass2.textContent="Las contraseñas no coinciden";
+        event.preventDefault();
+		
+     }else{
+		 errorPass2.textContent="";
+	 }
+	 
+	 //curso 
+	 
+	 let cursos=document.querySelectorAll('.curso');
+	 let errorCursos=document.getElementById('errorCursos');
+	 
+	 let marcados=0;
+	 for(let i=0; i < cursos.length; i++){
+		 if(cursos[i].checked){
+			 marcados++;
+			 
+		 }
+	 }
+	 
+	 if(marcados < 2){
+		 errorCursos.textContent='Tienes que elegir al mnenos dos cursos';
+			 event.preventDefault();
+	 }else{
+		 errorCursos.textContent="";
+	 }
+	 
+	 
+	 
+	 
+   }
+   function soloVocales(event){
+	   let vocales="aeiou";
+	   let error=document.getElementById('errorApe');
+	   
+	   
+	   if(vocales.includes(event.key)){
+		   error.textContent='No se permiten vocales';
+		   event.preventDefault();
+	   }
+	   
+   }
+
+
+
+</script>
+
+</head>
+
+<body>
+
+<h1>Formulario de Registro</h1>
+
+<form id="formulario">
+
+    Nombre:
+    <input type="text" id="nombre">
+    <span class="error"></span>
+    <br><br>
+	
+	Apellido:
+    <input type="text" id="apellido">
+    <span id="errorApe"></span>
+    <br><br>
+
+    Usuario:
+    <input type="text" id="usuario">
+    <span class="error"></span>
+    <br><br>
+
+    Email:
+    <input type="text" id="email">
+    <span class="error"></span>
+    <br><br>
+
+    Contraseña:
+    <input type="password" id="pass">
+    <span class="error"></span>
+    <br><br>
+
+    Repetir contraseña:
+    <input type="password" id="pass2">
+    <span class="error"></span>
+    <br><br>
+
+
+    Cursos:
+
+    <input type="checkbox" class="curso">Java
+    <input type="checkbox" class="curso">PHP
+    <input type="checkbox" class="curso">JavaScript
+
+    <span id="errorCursos" class="error"></span>
+
+    <br><br>
+
+    Provincia:
+
+    <select id="provincia">
+        <option value="">Seleccione</option>
+        <option>Madrid</option>
+        <option>Barcelona</option>
+        <option>Valencia</option>
+    </select>
+
+    <span class="error"></span>
+
+    <br><br>
+
+    <input type="submit" value="Enviar">
+
+</form>
+
+
+</body>
+</html>

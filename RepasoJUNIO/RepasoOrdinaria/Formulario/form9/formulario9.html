@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica Validaciones</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            let formulario = document.getElementById('formulario');
+
+            formulario.addEventListener('submit', validar);
+
+
+        });
+
+        function validar(e) {
+
+
+            let regex = /^[A-Z][A-Za-z0-9]{4,11}$/;
+            let mayus = "QWERTYUIOPASDFGHJKLÑZXCVBNM";
+            let usuario = document.getElementById('usuario');
+            let primera = usuario.value.charAt(0);
+            let largo=usuario.value.trim().length;
+
+
+            if(primera !== primera.toUpperCase() || primera === "" || largo < 5 || largo > 12){
+                alert('La primera tiene que ser mayus');
+                e.preventDefault();
+            }
+
+
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <h2>Registro</h2>
+
+    <form id="formulario">
+
+        <label>Nombre de usuario</label>
+        <input type="text" id="usuario">
+        <div class="error"></div>
+
+        <label>Código</label>
+        <input type="text" id="codigo">
+        <div class="error"></div>
+
+        <label>Teléfono</label>
+        <input type="text" id="telefono">
+        <div class="error"></div>
+
+        <label>Contraseña</label>
+        <input type="password" id="pass">
+        <div class="error"></div>
+
+        <br>
+        <input type="submit" value="Enviar">
+
+    </form>

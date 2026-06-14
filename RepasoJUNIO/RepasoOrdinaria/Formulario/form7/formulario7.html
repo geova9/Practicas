@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro Gamer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+	
+	let enviar=document.getElementsByClassName('btn-enviar')[0];
+	let enviar2=document.querySelector('input[type=submit]');
+	enviar.addEventListener('click', validar);
+	
+	
+	
+	
+	
+	
+});
+
+function validar(event){
+	
+	let nombre=document.getElementsByClassName('nick')[0];
+	
+	if(nombre.value == ""){
+		alert('El campo nombre tiene que estar lleno');
+		event.preventDefault();
+	}
+	
+	
+	let email=document.getElementsByClassName('email')[0];
+	let emailValue=email.value.trim();
+	let regexEmail=/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,3}$/;
+	
+	if(emailValue == "" || !regexEmail.test(emailValue)){
+		alert('El campo email tiene que estar y algo@algo.com');
+		event.preventDefault();
+	}
+	
+	//Contraseña*
+	let pass=document.querySelector('.password');
+	let passValue=pass.value.trim();
+	
+	let info=document.getElementsByClassName('info-pass')[0];
+	
+	let regexPass = /^(?=.*[0-9])(?=.*[A-Z]).{6,}$/; //.* cualquier cantidad de caracter (* 0 o mas )
+	
+	if(passValue == "" || !regexPass.test(passValue) ){
+		alert('El campo contraseña no es valida');
+		info.textContent="minimo 6 caracteres, al menos 1 número, al menos 1 letra mayúscula";
+		event.preventDefault();
+		
+	}
+	
+	
+}
+
+
+</script>
+
+<body>
+<br>
+<br>
+<h2>Registro de jugador</h2>
+
+
+<form class="form-registro">
+
+    <label>Nick*</label>
+    <input type="text" class="nick"><br><br>
+
+    <label>Email*</label>
+    <input type="text" class="email"><br><br>
+
+    <label>Contraseña*</label>
+    <input type="password" class="password"><br>
+    <small class="info-pass"></small>
+    <br>
+
+    <label>Edad*</label>
+    <input type="text" class="edad"><br><br>
+
+    <label>Plataforma*</label>
+    <select class="plataforma">
+        <option value="">-- selecciona --</option>
+        <option value="PC">PC</option>
+        <option value="PS">PlayStation</option>
+        <option value="XB">Xbox</option>
+    </select>
+    <br><br>
+
+    <label>ID jugador*</label>
+    <input type="text" class="id-jugador"><br><br>
+
+    <input type="submit" class="btn-enviar" value="Registrarse">
+
+</form>
+
+<!-- icono para mover en bonus -->
+<img src="mando.png" class="icono" style="position:absolute;top:10px;left:10px;width:50px;height:50px;">
+
+</body>
+</html>

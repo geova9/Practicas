@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            let formulario=document.getElementById('formulario');
+            formulario.addEventListener('submit', validar);
+
+            let nombre = document.getElementById('nick');
+            nombre.addEventListener('keyup', () => {
+                let numeros = "0123456789";
+
+                if (numeros.includes(event.key)) {
+                    console.log('Numeros noooooooooooo');
+                } else {
+                    console.log(event.key);
+                }
+
+            });
+            let codigo = document.getElementById('codigo');
+            let errorCodigo = document.getElementById('errorCodigo');
+            let regex = /^[A-Z]{3}-\d{3}$/;
+
+            codigo.addEventListener('input', () => {
+               
+                let codeLimpio = codigo.value.toUpperCase();
+                codigo.value = codeLimpio;
+
+                // 2. Calculamos los caracteres escritos
+                let totalCaracteres = codeLimpio.length;
+
+                // 3. Validamos el formato
+                if (codeLimpio === "") {
+                    errorCodigo.textContent = "Caracteres: 0";
+                    errorCodigo.style.color = "gray";
+                } else if (!regex.test(codeLimpio)) {
+                    // Mostramos el error Y el contador al mismo tiempo
+                    errorCodigo.textContent = `Formato incorrecto (ABC-123) | Caracteres: ${totalCaracteres}`;
+                    errorCodigo.style.color = "red";
+                } else {
+                    errorCodigo.textContent = `¡Código válido! | Caracteres: ${totalCaracteres}`;
+                    errorCodigo.style.color = "green";
+                }
+            });
+
+
+            //
+
+        });
+
+        function validar(event){
+            let plataforma=document.querySelectorAll('.plataforma');
+            let marcada=false;
+
+           plataforma.forEach( select =>{
+            if(select.checked){
+                marcada=true;
+            }
+            
+           });
+           if(!marcada){
+            alert('Tiene que haber al menos una opcion marcada');
+            event.preventDefault();
+           }
+
+           //juego
+           let juego=document.getElementById('juego');
+
+           if(juego.value === ""){
+              alert('Tienes que elegir un juego');
+              event.preventDefault();
+           }
+
+        }
+
+
+
+    </script>
+
+</head>
+
+<body>
+    <form id="formulario">
+
+        <label>Nick:</label>
+        <input type="text" id="nick">
+        <span id="errorNick"></span>
+
+        <br><br>
+
+        <label>Código de Jugador:</label>
+        <input type="text" id="codigo">
+        <span id="errorCodigo"></span>
+
+        <br><br>
+
+        <label>Juego:</label>
+        <select id="juego">
+            <option value="">Seleccione</option>
+            <option value="LoL">League of Legends</option>
+            <option value="Valorant">Valorant</option>
+            <option value="CS2">Counter Strike 2</option>
+        </select>
+
+        <br><br>
+
+        <label>Plataformas:</label>
+
+        <input type="checkbox" class="plataforma" value="PC">
+        <label>PC</label>
+
+        <input type="checkbox" class="plataforma" value="PS5">
+        <label>PS5</label>
+
+        <input type="checkbox" class="plataforma" value="Xbox">
+        <label>Xbox</label>
+
+        <br><br>
+
+        <input type="submit" value="Registrar">
+
+    </form>
+
+    <div id="resultado"></div>
+
+</body>
+
+</html>

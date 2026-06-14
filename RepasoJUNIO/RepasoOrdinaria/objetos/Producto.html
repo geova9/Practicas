@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Productos</title>
+
+  <script>
+    class Producto {
+      constructor(id, nombre, descripcion, precio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+      }
+	  visualizar(producto) {
+        producto.forEach(p => console.log(p));
+      }
+    }
+
+    let catalogo = [];
+
+    function añadirProducto() {
+      let id = document.getElementById('ident').value;
+      let nombre = document.getElementById('nombre').value;
+      let descripcion = document.getElementById('descripcion').value;
+      let precio = document.getElementById('precio').value;
+
+      catalogo.push(new Producto(id, nombre, descripcion, precio));
+
+      let formatohtml = catalogo
+        .map(p => `ID: ${p.id} - ${p.nombre} - ${p.descripcion} - ${p.precio}`)
+        .join("<br>");
+
+      let ventana = window.open("", "", "width=450,height=450");
+      ventana.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head><title>Lista de Productos</title></head>
+        <body>
+          <h3>Productos</h3>
+          ${formatohtml}
+          <br><br>
+          <input type="button" value="Correcto" onclick="window.close()">
+        </body>
+        </html>
+      `);
+    }
+
+    function analizarDescripcion() {
+      let descripcion = document.getElementById('descripcion').value.trim();
+
+      if (descripcion === "") {
+        alert("La descripción está vacía.");
+        return;
+      }
+
+      let palabras = descripcion.split(" ");
+
+      let masLarga = palabras[0];
+      for (let i = 1; i < palabras.length; i++) {
+        if (palabras[i].length > masLarga.length) {
+          masLarga = palabras[i];
+        }
+      }
+
+      let vocales = ["a", "e", "i", "o", "u"];
+      let contador = 0;
+
+      for (let i = 0; i < masLarga.length; i++) {
+        if (vocales.includes(masLarga[i].toLowerCase())) {
+          contador++;
+        }
+      }
+
+      alert("Descripción más larga: " + masLarga + "\nNúmero de vocales: " + contador);
+    }
+
+    // Por si tu navegador no encuentra las funciones con onclick
+    window.añadirProducto = añadirProducto;
+    window.analizarDescripcion = analizarDescripcion;
+  </script>
+</head>
+
+<body>
+  <form>
+    <table>
+      <tr>
+        <td>ID:</td>
+        <td><input type="number" id="ident"></td>
+      </tr>
+      <tr>
+        <td>Nombre:</td>
+        <td><input type="text" id="nombre"></td>
+      </tr>
+      <tr>
+        <td>Descripción:</td>
+        <td>
+          <input type="text" id="descripcion">
+          <input type="button" value="Analizar descripción" onclick="analizarDescripcion()">
+        </td>
+      </tr>
+      <tr>
+        <td>Precio:</td>
+        <td><input type="number" id="precio"></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <input type="button" onclick="añadirProducto()" value="Añadir producto">
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+</html>

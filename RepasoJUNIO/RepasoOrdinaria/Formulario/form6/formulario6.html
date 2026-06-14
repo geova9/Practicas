@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+	
+	let enviar=document.querySelector('input[type=submit]');
+	enviar.addEventListener('click', ()=>{
+		alert('Formulario enviado correctamente');
+	});
+	
+	document.getElementById('edad').addEventListener('keydown', soloNumeros);
+	
+	let alias=document.getElementById('alias');
+	
+	alias.addEventListener('focus', ()=>{
+		alias.style.backgroundColor = 'lightgreen';
+	});
+	
+	alias.addEventListener('blur', ()=>{
+		
+		alias.style.backgroundColor = 'white';
+		
+	});
+	document.addEventListener('dblclick', moverImagen);
+	document.addEventListener('click', agradarImagen);
+	
+	
+});
+function validar(event){
+	
+	let alias=document.getElementById('alias').value;
+	
+	if(alias == ""){
+		alert('El campo Alias no puede estar vacío');
+		event.preventDefault();
+	}
+	
+	//codigo
+	let codigo=document.getElementById('codigo');
+	let regexCodigo=/^[A-Z]{2}\_[0-9]{3}[a-z]{1}$/;
+	
+	if(codigo.value == "" || !regexCodigo.test(codigo.value)){
+		alert('Empieza por 2 letras mayúsculas, guión bajo,3 números y termina con una letra minúscula.');
+		event.preventDefault();
+	}
+	
+	//plataforma
+	
+	let plataforma=document.getElementById('plataforma');
+	
+	if(plataforma.value == " "){
+		alert('Es obligatorio elegir una opción');
+		event.preventDefault();
+	}
+	//ID jugador 
+	
+	let regexPC=/^PC[0-9]{5}$/;
+	let regexPS=/^PS-[a-z]{3}\-[0-9]{3}$/;
+	let idJugador=document.getElementById('idJugador');
+	
+	
+	let regexTemp=null;
+	if(plataforma.value === 'PC'){
+		
+		regexTemp = regexPC;
+		
+	}else if (plataforma.value === 'PlayStation'){
+		
+		regexTemp = regexPS;
+	
+	}else {
+		alert('Elige una plataforma');
+		event.preventDefault();
+	}
+	
+	if(idJugador.value.trim().length === 0){
+		alert('Es necesario que pongas un ID');
+		event.preventDefault();
+		
+	}else if (!regexTemp.test(idJugador.value)){
+			
+		alert('EL numero de ID es invalido');
+		event.preventDefault();
+	}
+	
+	
+	
+}
+
+//edad solo numeros
+
+function soloNumeros(event){
+	
+	let digitos='0123456789';
+	if(!digitos.includes(event.key) && event.key !== 'Backspace'){
+		event.preventDefault();
+	}
+	
+	
+}
+
+function moverImagen(event){
+	
+	let imagen=document.getElementById('logoImg');
+	
+	 imagen.style.left = event.clientX+'px';
+	 imagen.style.top = event.clientY+'px';
+	
+}
+
+function agradarImagen(event){
+	let imagen=document.getElementById('logoImg');
+	
+	let ancho=imagen.clientWidth;
+	let alto=imagen.clientHeight;
+	
+	imagen.style.width=(ancho + 10) + 'px';
+	imagen.style.height=(alto + 10) + 'px';
+}
+
+
+</script>
+
+<body>
+
+<img src="mando.png" id="logoImg" style="position:absolute;top:0px;left:0px;width:60px;height:60px;">
+<br>
+<br>
+
+<form id="f1"  style="position:relative;padding-top:50px;">
+
+  Alias*:
+<input type="text" id="alias"><br>
+
+Código de acceso*:
+<input type="text" id="codigo"><br>
+
+Edad:
+<input type="text" id="edad"><br>
+
+Plataforma*:
+<select id="plataforma">
+    <option value=" " selected></option>
+    <option value="PC">PC</option>
+    <option value="PlayStation">PlayStation</option>
+</select>
+<br>
+
+ID de jugador*:
+<input type="text" id="idJugador"><br>
+
+<input type="submit" value="Registrarse">
+
+</form>
+
+
+
+</body>
+
+</html>

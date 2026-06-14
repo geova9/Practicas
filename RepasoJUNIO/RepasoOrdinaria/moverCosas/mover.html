@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+
+<script>
+let movimiento=false;
+let intervalo=null;
+let posicion=0;
+let direccion=1;
+
+
+function mover(){
+let img=document.getElementById('captura');
+let boton=document.getElementById('boton');
+let altoVentana=window.innerHeight;
+if(!movimiento){
+
+	intervalo=setInterval(()=>{
+		
+	posicion+=direccion;
+	
+	if(posicion>=altoVentana){
+		direccion= -1;	
+	}	
+	if(posicion<=0){
+		direccion = 1;
+	}	
+		
+		
+	
+	
+    img.style.top=posicion + "px";	
+		
+	}, 10);
+	
+	movimiento=true;
+	boton.textContent="Parar";
+	
+}else{
+	clearInterval(intervalo);
+	movimiento=false;
+	boton.textContent="Mover";
+	
+}
+
+
+	
+}
+
+
+
+</script>
+
+<body>
+<div>
+<img id="captura" src="captura.png" alt="HTML tutorial" style="position:absolute; width:42px;height:42px;">
+</div>
+<button onclick="mover()" id="boton"; type="button">Click Me!</button> 
+
+
+
+</body>
+
+</html>

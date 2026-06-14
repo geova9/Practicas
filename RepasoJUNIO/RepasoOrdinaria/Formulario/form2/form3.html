@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', ()=>{
+	
+	
+	let formulario=document.getElementById('reservaForm');
+	
+	formulario.addEventListener('submit', validar);
+	
+	let nombre=document.getElementById('nombre');
+	nombre.addEventListener('focus', ()=>{
+		nombre.style.border="solid 2px orange";
+		
+	});
+	let habitacion=document.getElementById('habitacion');
+	habitacion.addEventListener('keydown', soloDigitos);
+	
+	
+	let imagen=document.querySelector('.imagen-hotel');
+	imagen.addEventListener('mouseover', agrandar);
+
+   
+	document.addEventListener('dblclick', mover);
+	
+})
+function validar(event){
+	
+	let nombre=document.getElementById('nombre');
+	
+	if(nombre.value== ""){
+		alert("El nombre no puede estar vacío");
+		event.preventDefault();
+	}
+	
+	//Codigos de las habitaciones
+	
+	let codigoValido=null;
+	let room=document.getElementById('tipo_habitacion').value;
+	let codigo=document.getElementById('codigo').value;
+	
+	let regexIndividual=/^IND[0-9]{4}$/;
+	let regexDouble=/^DBL[0-9]{4}$/;
+	let regexSuite=/^STE[0-9]{4}$/;
+	
+	if(room === "individual"){
+	  codigoValido = regexIndividual;
+		
+		
+	}else if(room === "doble"){
+		codigoValido = regexDouble;
+	}else if(room === "suite"){
+		codigoValido = regexSuite;
+	}
+	if(codigo == ""){
+		alert('Formato no valido');
+		
+	}else if(codigoValido && !codigoValido.test(codigo)){
+		alert('Codigo invalido');
+		event.preventDefault();
+	}
+	
+}
+
+function soloDigitos(e){
+  
+	let digitos="0123456789";
+	if(!digitos.includes(e.key) && e.key != 'Backspace'){
+		alert('SOLO DIGITOSSSSS');
+		e.preventDefault();
+	}
+}
+
+
+function agrandar(){
+	let imagen=document.querySelector('.imagen-hotel');
+	let alto=imagen.clientHeight;
+	let ancho=imagen.clientWidth;
+	imagen.style.width=(ancho + 10) + "px";
+	imagen.style.height=(alto + 10) + "px";
+	
+}
+
+function mover(event){
+	let imagen=document.querySelector('.imagen-hotel');
+    imagen.style.top=(event.clientY) + 'px';
+    imagen.style.left=(event.clientX) + 'px';
+	
+}
+
+</script>
+
+<body>
+<h2>Formulario de Reserva</h2>
+
+    <form id="reservaForm">
+        <div class="form-group">
+            <label Pisodfor="nombre">Nombre completo*</label>
+            <input type="text" id="nombre" >
+        </div>
+
+        <div class="form-group">
+            <label for="habitacion">Número de habitación</label>
+            <input type="text" id="habitacion" >
+        </div>
+
+        <div class="form-group">
+            <label for="tipo_habitacion">Tipo de habitación*</label>
+            <select id="tipo_habitacion" >
+                <option value="">(vacío)</option>
+                <option value="individual">Individual</option>
+                <option value="doble">Doble</option>
+                <option value="suite">Suite</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="codigo">Código de reserva*</label>
+            <input type="text" id="codigo">
+        </div>
+
+        <div class="form-group">
+            <label for="fecha">Fecha de entrada*</label>
+            <input type="text" id="fecha">
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+   <img src="hotel.jpg" alt="Hotel" class="imagen-hotel" style="position:absolute; width:50px; height:50px">
+</body>
+
+</html>

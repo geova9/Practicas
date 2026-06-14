@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario 4</title>
+	<script>
+	document.addEventListener('DOMContentLoaded', ()=>{
+		let formulario=document.getElementById('miFormulario');
+		formulario.addEventListener('submit', validar);
+		
+		let tipo=document.getElementById('tipoDoc');
+		tipo.addEventListener('focus', ()=>{
+			tipo.style.border=" solid 2px #d0e8ff";
+		});
+		tipo.addEventListener('blur', ()=>{
+			tipo.style.border=" solid 2px orange";
+		});
+	
+		
+		
+	})
+	function validar(event){
+
+    let tipo = document.getElementById('tipoDoc').value;
+    let numero = document.getElementById('numDoc').value;
+    let importe = document.getElementById('importe').value;
+
+    let regexDNI = /^\d{8}[A-Z]$/;
+    let regexPasaporte = /^[A-Z]{3}\d{6}$/;
+    let regexNumeros = /^\d{1,8}$/;
+
+    let valorElegido = null;
+
+    if(tipo === "DNI"){
+        valorElegido = regexDNI;
+    }else if(tipo === "Pasaporte"){
+        valorElegido = regexPasaporte;
+    }
+
+    if(numero.trim() === ""){
+        alert('Este campo no puede estar vacío');
+        event.preventDefault();
+    }else if(valorElegido !== null && !valorElegido.test(numero)){
+        alert('Los valores no son correctos');
+        event.preventDefault();
+    }
+
+    if(importe === "" || !regexNumeros.test(importe)){
+        alert('Valor no permitido');
+        event.preventDefault();
+    }
+}
+	
+	
+	
+	
+	
+	function soloNumeros(e){
+		let digitos="0123456789";
+		if(!digitos.includes(e.key) && e.key != "Backspace"){
+			alert('Solo digitoooos');
+			e.preventDefault();
+		}
+	}
+	
+	
+	</script>
+</head>
+<body>
+<form id="miFormulario">
+        
+        <div class="form-group">
+            <label for="tipoDoc">Tipo de documento*</label>
+            <select id="tipoDoc">
+                <option value=""></option>
+                <option value="DNI">DNI</option>
+                <option value="Pasaporte">Pasaporte</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="numDoc">Número de documento*</label>
+            <input type="text" id="numDoc">
+        </div>
+
+        <div class="form-group">
+            <label for="ingresos">Ingresos mensuales</label>
+            
+            <input type="text" id="ingresos">
+        </div>
+
+        <div class="form-group">
+            <label for="importe">Importe solicitado</label>
+            <input type="text" id="importe" >
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña de acceso*</label>
+            <input type="password" id="password">
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
+    
+</body>
+</html>

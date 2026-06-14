@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Examen JS</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            let formulario = document.getElementById('formulario');
+
+            formulario.addEventListener('submit', validar);
+
+            //opciones de provincia
+
+            let provincia = document.getElementById('provincia');
+
+            let mensaje = document.getElementById('mensajeProvincia');
+
+            provincia.addEventListener('change', () => {
+                let seleccion = provincia.value;
+                if (seleccion === "") {
+                    mensaje.textContent = "";
+                } else {
+                    mensaje.textContent = "La seleccionada es: " + seleccion;
+
+                }
+
+            });
+
+
+
+
+
+        })
+
+
+        function validar(event) {
+            event.preventDefault();
+            let nombre = document.getElementById('nombre');
+            let error = document.getElementById('errorNombre');
+
+            if (nombre.value.trim().length < 3) {
+                error.style.color = "red";
+                error.textContent = "El campo de Nombre es demasiado corto";
+                event.preventDefault();
+            } else {
+                error.textContent = "";
+            }
+
+            //email regex
+
+            let email = document.getElementById('email');
+            let regexEmail = /^[A-Za-z0-9.]+\@[A-Za-z0-9.]+\.[A-Za-z]{2,3}$/;
+            let errorEmail = document.getElementById('errorEmail');
+
+
+            if (email.value == "" || !regexEmail.test(email.value)) {
+                errorEmail.style.color = "red";
+                errorEmail.textContent = "Su email no es valido.Ej:ejemplo.email.es";
+                event.preventDefault();
+            } else {
+                errorEmail.textContent = "";
+            }
+
+            /// 3. Validar URL
+            let url = document.getElementById('url');
+            let regexUrl = /^https?:\/\/[A-Za-z0-9.]+$/;
+            let errorUrl = document.getElementById('errorUrl');
+            if (url.value.trim() == "" || !regexUrl.test(url.value)) {
+                errorUrl.style.color = "red";
+                errorUrl.textContent = " Esta url no es válida";
+                event.preventDefault();
+
+            } else {
+                errorUrl.textContent = "";
+            }
+
+
+            //  Validar Edad
+            let edadInput = document.getElementById('edad').value.trim();
+            let edad = parseInt(edadInput);
+
+            if (edadInput === "" || isNaN(edad) || edad < 18 || edad > 65) {
+                alert('La edad debe estar entre 18 y 65 años.');
+                event.preventDefault();
+            }
+
+            //sexooo
+            let sexo = document.querySelectorAll('input[name="sexo"]');
+            let textoSexo = ""; // 1. Creamos la variable aquí fuera para usarla luego
+
+            // 2. Comprobamos si no se ha marcado ninguno
+            if (!sexo[0].checked && !sexo[1].checked) {
+                alert('Elige un sexooo');
+                event.preventDefault();
+                return; // Frenamos la función aquí para que no siga ejecutando
+            }
+
+            // 3. Si el código sigue vivo, buscamos cuál se marcó (FUERA del IF de error)
+            sexo.forEach(function (sexos) {
+                if (sexos.checked) {
+                    textoSexo = sexos.value; // Guardamos "Hombre" o "Mujer"
+                }
+            });
+
+
+            // Validar Provincia
+            let provinciaSeleccionada = document.getElementById('provincia').value;
+
+            if (provinciaSeleccionada === "") {
+                alert('Por favor, selecciona una provincia.');
+                event.preventDefault(); // Evita que se envíe el formulario
+            }
+
+            //aficiones
+
+            let afi = document.querySelectorAll('.aficion');
+
+            if (!afi[0].checked && !afi[1].checked && !afi[2].checked) {
+                alert("Debes de seleccionar al menos una opcion");
+                event.preventDefault();
+            }
+            //mostrar
+
+            let aficiones = document.querySelectorAll('.aficion');
+
+            let texto = "";
+            aficiones.forEach(function (aficion) {
+                if (aficion.checked) {
+                    texto += "-" + aficion.value + "<br>";
+                }
+
+            });
+
+
+            let resultado = document.getElementById("resultado");
+
+            resultado.innerHTML =
+                "Nombre: " + nombre.value + "<br>" +
+                "Email: " + email.value + "<br>" +
+                "Provincia: " + provinciaSeleccionada + "<br>" +
+                "Sexo: " + textoSexo + "<br><br>" +
+                "Aficiones:<br>" +
+                texto;
+
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <h2>Registro de Usuario</h2>
+
+    <form id="formulario">
+
+        <label>Nombre:</label>
+        <input type="text" id="nombre">
+        <span id="errorNombre"></span>
+
+        <br><br>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <span id="errorEmail"></span>
+
+        <br><br>
+
+        <label>URL Personal:</label>
+        <input type="text" id="url">
+        <span id="errorUrl"></span>
+
+        <br><br>
+
+        <label>Edad:</label>
+        <input type="number" id="edad">
+
+        <br><br>
+
+        <label>Provincia:</label>
+        <select id="provincia">
+            <option value="">Seleccione</option>
+            <option value="Madrid">Madrid</option>
+            <option value="Valencia">Valencia</option>
+            <option value="Barcelona">Barcelona</option>
+        </select>
+
+        <p id="mensajeProvincia"></p>
+
+        <br>
+
+        <label>Sexo:</label>
+
+        <input type="radio" name="sexo" value="Hombre">
+        <label>Hombre</label>
+
+        <input type="radio" name="sexo" value="Mujer">
+        <label>Mujer</label>
+
+        <br><br>
+
+        <label>Aficiones:</label>
+
+        <input type="checkbox" class="aficion" value="Deporte">
+        <label>Deporte</label>
+
+        <input type="checkbox" class="aficion" value="Cine">
+        <label>Cine</label>
+
+        <input type="checkbox" class="aficion" value="Videojuegos">
+        <label>Videojuegos</label>
+
+        <br><br>
+
+        <input type="submit" value="Enviar">
+
+    </form>
+
+    <div id="resultado"></div>
+
+</body>
+
+</html>

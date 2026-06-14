@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+<script>
+
+let movimiento=false;
+let posicion=0;
+let direccion=1;
+let intervalo=null; 
+
+function moverDerecha(){
+	let img=document.getElementById('img1');
+	let boton=document.getElementsByTagName('button')[0];
+	let anchoVentana=window.innerWidth;
+	
+	if(!movimiento){
+		intervalo=setInterval(()=>{
+		
+		posicion+= direccion;
+		
+		if(posicion + img.offsetWidth>= anchoVentana){
+			direccion=-1;
+		}
+		if(posicion <=0 ){
+			direccion= 1;
+		}
+		img.style.left=posicion + "px";
+			
+		}, 10);
+		
+		movimiento=true;
+	    boton.textContent="Parar";
+	
+		
+	}else{
+		clearInterval(intervalo);
+		movimiento=false;
+	    boton.textContent="Mover";
+		
+	}
+	
+	
+
+}
+
+
+
+</script>
+
+<body>
+<img id="img1" src="captura.png" style="position:absolute; left:0px; top:100px; width:100px;">
+<button onclick="moverDerecha()">Mover</button>
+</body>
+
+</html> 

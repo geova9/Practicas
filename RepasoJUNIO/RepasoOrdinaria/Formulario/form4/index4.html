@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            let formulario = document.getElementById('formulario');
+            formulario.addEventListener('submit', validar);
+
+            let nombre = document.getElementById('nombre');
+
+            let errorNombre = document.getElementById('errorNombre');
+            nombre.addEventListener('keyup', () => {
+
+                let nombreLimpio = nombre.value.trim();
+                if (nombreLimpio.length < 5) {
+                    errorNombre.textContent = "Al menos 5 caracteres";
+
+                } else {
+                    errorNombre.textContent = "";
+                }
+
+            })
+
+            //sacar el texto de sala seleccionada
+            let sala = document.getElementById('sala');
+            let mensajeSala = document.getElementById('mensajeSala');
+            sala.addEventListener('change', () => {
+                let salaSelect = sala.value;
+
+                if (salaSelect === "") {
+                    mensajeSala.textContent = "";
+                } else {
+                    mensajeSala.textContent = "Sala seleccionada: " + salaSelect;
+                }
+
+            })
+
+
+
+        });
+
+        function validar(event) {
+            let nombre = document.getElementById('nombre');
+            let nombreLimpio = nombre.value.trim();
+            let errorNombre = document.getElementById('errorNombre');
+            errorNombre.style.color = "red";
+            if (nombreLimpio == "") {
+                errorNombre.textContent = "El campo nombre no puede estar vacioooooo";
+                event.preventDefault();
+            }
+
+            //dni
+            let dni = document.getElementById('dni');
+            let errorDni = document.getElementById('errorDni');
+            errorDni.style.color = "red";
+            let regexDni = /^[0-9]{8}[A-Z]$/;
+
+            if (dni.value == "" || !regexDni.test(dni.value)) {
+                errorDni.textContent = "El dni no puede estar vacio y formato correcto:123...8?";
+                event.preventDefault();
+            }
+
+            //email
+            let email = document.getElementById('correo');
+            let errorEmail = document.getElementById('errorCorreo');
+            errorEmail.style.color = "red";
+            let regexCorreo = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,3}$/;
+
+            if (email.value == "" || !regexCorreo.test(email.value)) {
+                errorDni.textContent = "El dni no puede estar vacio y formato correcto:123...8?";
+                event.preventDefault();
+            }
+
+            //entraddas
+
+            let entradas = document.getElementById('entradas').value.trim();
+            let numEntradas = parseInt(entradas);
+            if (entradas == "" || isNaN(numEntradas) || numEntradas < 1 || numEntradas > 10) {
+                alert("El numero de entradas solo puede ser entre 1 y 10 ");
+                event.preventDefault();
+            }
+
+            //sala
+            let sala = document.getElementById('sala');
+            if (sala.value === "") {
+                alert("Tienes que elegir una sala, por favor");
+                event.preventDefault();
+            }
+
+            //radio
+
+            let ticket = document.querySelectorAll('input[name="tipo"]');
+            if (!ticket[0].checked && !ticket[1].checked) {
+                alert('Tienes que elegir un tipo de ENTRADAS');
+                event.preventDefault();
+                return;
+            }
+
+            //extras
+
+            let extras = document.querySelectorAll('.extra');
+            if (!extras[0].checked && !extras[1].checked && !extras[2].checked) {
+                alert('Tienes que elegir un tipo de EXTRAS');
+                event.preventDefault();
+                return;
+            }
+
+            //mostrar 
+
+            event.preventDefault();
+
+            let ex = document.querySelectorAll('.extra');
+            let extraSelect = "";
+
+            ex.forEach(function (extra) {
+
+                if (extra.checked) {
+                    extraSelect += "- " + extra.value + "<br>";
+                }
+
+            });
+
+            let tipoSeleccionado = document.querySelector('input[name="tipo"]:checked').value;
+
+            let resultado = document.getElementById('resultado');
+
+            let contenido = `
+               <h3>Resumen de Reserva</h3>
+               <p><strong>Nombre:</strong> ${nombreLimpio}</p>
+               <p><strong>DNI:</strong> ${dni.value}</p>
+               <p><strong>Correo:</strong> ${email.value}</p>
+               <p><strong>Entradas:</strong> ${numEntradas}</p>
+               <p><strong>Sala:</strong> ${sala.value}</p>
+               <p><strong>Tipo:</strong> ${tipoSeleccionado}</p>
+               <p><strong>Extras:</strong><br>${extraSelect}</p>
+               `;
+
+            resultado.innerHTML = contenido;
+
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <form id="formulario">
+
+        <label>Nombre Completo:</label>
+        <input type="text" id="nombre">
+        <span id="errorNombre"></span>
+
+        <br><br>
+
+        <label>DNI:</label>
+        <input type="text" id="dni">
+        <span id="errorDni"></span>
+
+        <br><br>
+
+        <label>Correo:</label>
+        <input type="text" id="correo">
+        <span id="errorCorreo"></span>
+
+        <br><br>
+
+        <label>Número de Entradas:</label>
+        <input type="number" id="entradas">
+
+        <br><br>
+
+        <label>Sala:</label>
+
+        <select id="sala">
+            <option value="">Seleccione</option>
+            <option value="Sala 1">Sala 1</option>
+            <option value="Sala 2">Sala 2</option>
+            <option value="Sala 3">Sala 3</option>
+        </select>
+
+        <p id="mensajeSala"></p>
+
+        <br>
+
+        <label>Tipo de Entrada:</label>
+
+        <input type="radio" name="tipo" value="Normal">
+        <label>Normal</label>
+
+        <input type="radio" name="tipo" value="VIP">
+        <label>VIP</label>
+
+        <br><br>
+
+        <label>Extras:</label>
+
+        <input type="checkbox" class="extra" value="Palomitas">
+        <label>Palomitas</label>
+
+        <input type="checkbox" class="extra" value="Refresco">
+        <label>Refresco</label>
+
+        <input type="checkbox" class="extra" value="Gafas 3D">
+        <label>Gafas 3D</label>
+
+        <br><br>
+
+        <input type="submit" value="Reservar">
+
+    </form>
+
+    <div id="resultado"></div>
+</body>
+
+</html>
